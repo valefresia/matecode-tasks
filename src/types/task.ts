@@ -7,4 +7,4 @@ export interface Task {
     createdAt: number;
 }
 
-export type NewTask = Omit<Task, "id" | "userId" | "createdAt">;
+export type NewTask = Omit<Task, "id" | "userId" | "createdAt" | "completed">;
