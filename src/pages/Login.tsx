@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import "./Auth.css";
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -28,34 +29,39 @@ export const Login = () => {
     };
 
     return (
-        <div>
-            <h1>Iniciar sesión</h1>
+        <div className="auth-page">
+            <div className="auth-card">
+                <h1>Hola de nuevo 🧉</h1>
+                <p className="auth-subtitle">Iniciá sesión para ver tus tareas</p>
 
-            {error && <p role="alert">{error}</p>}
+                {error && <p className="auth-error" role="alert">{error}</p>}
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Ingresar</button>
-            </form>
+                <form className="auth-form" onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <button className="btn-primary" type="submit">Ingresar</button>
+                </form>
 
-            <button onClick={handleGoogleLogin}>Ingresar con Google</button>
+                <button className="btn-google" onClick={handleGoogleLogin}>
+                    Ingresar con Google
+                </button>
 
-            <p>
-                ¿No tenés cuenta? <Link to="/register">Registrate</Link>
-            </p>
+                <p className="auth-switch">
+                    ¿No tenés cuenta? <Link to="/register">Registrate</Link>
+                </p>
+            </div>
         </div>
     );
 };
