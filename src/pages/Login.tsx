@@ -31,8 +31,8 @@ export const Login = () => {
     return (
         <div className="auth-page">
             <div className="auth-card">
-                <h1>Hola de nuevo 🧉</h1>
-                <p className="auth-subtitle">Iniciá sesión para ver tus tareas</p>
+                <h1>No te olvides de nada</h1>
+                <p className="auth-subtitle">Tu agenda te espera, iniciá sesión</p>
 
                 {error && <p className="auth-error" role="alert">{error}</p>}
 

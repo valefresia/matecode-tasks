@@ -4,6 +4,7 @@ import { useTasks } from "../hooks/useTasks";
 import { TodoForm } from "../components/TodoForm";
 import { TodoList } from "../components/TodoList";
 import type { Task, NewTask } from "../types/task";
+import "./Tasks.css";
 
 export const Tasks = () => {
     const { user, logout } = useAuth();
@@ -29,22 +30,29 @@ export const Tasks = () => {
     };
 
     return (
-        <div>
-            <h1>Mis tareas</h1>
-            <p>Sesión iniciada como: {user?.email}</p>
-            <button onClick={logout}>Cerrar sesión</button>
+        <div className="tasks-page">
+            <div className="tasks-header">
+                <div>
+                    <h1>Mi agenda ✨</h1>                    <p className="tasks-user">{user?.email}</p>
+                </div>
+                <button className="btn-logout" onClick={logout}>Cerrar sesión</button>
+            </div>
 
-            {error && <p role="alert">{error}</p>}
+            {error && <p className="tasks-error" role="alert">{error}</p>}
 
             <TodoForm
                 key={editingTask?.id ?? "new"}
                 onSubmit={handleFormSubmit}
                 initialTask={editingTask ?? undefined}
             />
-            {editingTask && <button onClick={handleCancelEdit}>Cancelar edición</button>}
+            {editingTask && (
+                <button className="btn-cancel-edit" onClick={handleCancelEdit}>
+                    Cancelar edición
+                </button>
+            )}
 
             {loading ? (
-                <p>Cargando tareas...</p>
+                <p className="tasks-loading">Cargando tareas...</p>
             ) : (
                 <TodoList
                     tasks={tasks}

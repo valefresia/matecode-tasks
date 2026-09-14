@@ -1,0 +1,23 @@
+.todo-form {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.todo-form input {
+    padding: 12px 16px;
+    border: 2px solid var(--color-surface-light);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.todo-form input:focus {
+    border-color: var(--color-accent);
+}

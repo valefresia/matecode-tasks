@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import type { NewTask, Task } from "../types/task";
+import "./TodoForm.css";
 
 interface TodoFormProps {
     onSubmit: (task: NewTask) => void;
@@ -24,7 +25,7 @@ export const TodoForm = ({ onSubmit, initialTask }: TodoFormProps) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="todo-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Título de la tarea"
@@ -38,7 +39,9 @@ export const TodoForm = ({ onSubmit, initialTask }: TodoFormProps) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
             />
-            <button type="submit">{initialTask ? "Guardar cambios" : "Agregar tarea"}</button>
+            <button className="btn-primary" type="submit">
+                {initialTask ? "Guardar cambios" : "Agregar tarea"}
+            </button>
         </form>
     );
 };

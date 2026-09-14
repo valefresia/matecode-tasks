@@ -1,4 +1,5 @@
 import type { Task } from "../types/task";
+import "./TodoList.css";
 
 interface TodoListProps {
     tasks: Task[];
@@ -9,24 +10,29 @@ interface TodoListProps {
 
 export const TodoList = ({ tasks, onToggle, onDelete, onEdit }: TodoListProps) => {
     if (tasks.length === 0) {
-        return <p>No tenés tareas todavía. ¡Creá la primera!</p>;
+        return <p className="tasks-empty">No tenés tareas todavía. ¡Creá la primera! 🎀</p>;
     }
 
     return (
-        <ul>
+        <ul className="todo-list">
             {tasks.map((task) => (
-                <li key={task.id}>
+                <li key={task.id} className={`todo-item ${task.completed ? "completed" : ""}`}>
                     <input
+                        className="todo-checkbox"
                         type="checkbox"
                         checked={task.completed}
                         onChange={() => onToggle(task)}
                     />
-                    <strong style={{ textDecoration: task.completed ? "line-through" : "none" }}>
-                        {task.title}
-                    </strong>
-                    <p>{task.description}</p>
-                    <button onClick={() => onEdit(task)}>Editar</button>
-                    <button onClick={() => onDelete(task.id)}>Eliminar</button>
+                    <div className="todo-content">
+                        <strong className={`todo-title ${task.completed ? "completed" : ""}`}>
+                            {task.title}
+                        </strong>
+                        {task.description && <p className="todo-description">{task.description}</p>}
+                        <div className="todo-actions">
+                            <button className="btn-edit" onClick={() => onEdit(task)}>Editar</button>
+                            <button className="btn-delete" onClick={() => onDelete(task.id)}>Eliminar</button>
+                        </div>
+                    </div>
                 </li>
             ))}
         </ul>
