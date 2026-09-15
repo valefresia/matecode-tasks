@@ -31,6 +31,8 @@ export const subscribeToUserTasks = (
                 completed: data.completed,
                 userId: data.userId,
                 createdAt: data.createdAt?.toMillis?.() ?? Date.now(),
+                dueDate: data.dueDate ?? null,
+                priority: data.priority ?? "media",
             };
         });
 

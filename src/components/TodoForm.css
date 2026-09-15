@@ -2,22 +2,68 @@
     background: var(--color-white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-soft);
-    padding: 20px;
+    padding: 28px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 18px;
+    margin-bottom: 12px;
 }
 
-.todo-form input {
+.todo-form-main {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.todo-form input[type="text"],
+.todo-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--color-surface-light);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    outline: none;
+    transition: border-color 0.2s ease;
+    resize: none;
+}
+
+.todo-form input[type="text"]:focus,
+.todo-form textarea:focus {
+    border-color: var(--color-accent);
+}
+
+.todo-form-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.todo-form-date-label,
+.todo-form-priority-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    flex: 1;
+    min-width: 180px;
+}
+
+.todo-form-date-label input[type="date"],
+.todo-form-priority-label select {
     padding: 12px 16px;
     border: 2px solid var(--color-surface-light);
     border-radius: var(--radius-md);
     font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s ease;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background: var(--color-white);
+    width: 100%;
 }
 
-.todo-form input:focus {
-    border-color: var(--color-accent);
+.todo-form .btn-primary {
+    width: 100%;
+    padding: 16px;
 }

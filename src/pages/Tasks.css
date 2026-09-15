@@ -1,25 +1,40 @@
 .tasks-page {
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
-    padding: 32px 20px 60px;
+    padding: 40px 20px 60px;
 }
 
 .tasks-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+    align-items: flex-start;
+    margin-bottom: 28px;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
+}
+
+.tasks-date {
+    display: block;
+    text-transform: capitalize;
+    color: var(--color-accent-dark);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
 }
 
 .tasks-header h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+}
+
+.tasks-header-right {
+    text-align: right;
 }
 
 .tasks-user {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--color-text-muted);
+    margin: 0 0 8px;
 }
 
 .btn-logout {
@@ -60,5 +75,14 @@
     color: var(--color-text-muted);
     text-decoration: underline;
     font-size: 0.85rem;
-    margin-top: 8px;
+    margin-top: -14px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.tasks-motivation {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: 6px 0 0;
 }

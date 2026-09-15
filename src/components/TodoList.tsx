@@ -8,6 +8,12 @@ interface TodoListProps {
     onEdit: (task: Task) => void;
 }
 
+const formatDueDate = (dueDate: string) => {
+    const [year, month, day] = dueDate.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+};
+
 export const TodoList = ({ tasks, onToggle, onDelete, onEdit }: TodoListProps) => {
     if (tasks.length === 0) {
         return <p className="tasks-empty">No tenés tareas todavía. ¡Creá la primera! 🎀</p>;
@@ -24,9 +30,14 @@ export const TodoList = ({ tasks, onToggle, onDelete, onEdit }: TodoListProps) =
                         onChange={() => onToggle(task)}
                     />
                     <div className="todo-content">
-                        <strong className={`todo-title ${task.completed ? "completed" : ""}`}>
-                            {task.title}
-                        </strong>
+                        <div className="todo-title-row">
+                            <strong className={`todo-title ${task.completed ? "completed" : ""}`}>
+                                {task.title}
+                            </strong>
+                            {task.dueDate && (
+                                <span className="todo-due-badge">{formatDueDate(task.dueDate)}</span>
+                            )}
+                        </div>
                         {task.description && <p className="todo-description">{task.description}</p>}
                         <div className="todo-actions">
                             <button className="btn-edit" onClick={() => onEdit(task)}>Editar</button>

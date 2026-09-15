@@ -28,9 +28,9 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-surface-light) 100%);
   color: var(--color-text);
   min-height: 100vh;
+
 }
 
 h1,
@@ -48,4 +48,12 @@ button {
 
 input {
   font-family: var(--font-body);
+}
+
+.grid-background {
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(rgba(188, 51, 95, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(188, 51, 95, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
