@@ -158,16 +158,18 @@
     display: flex;
     gap: 8px;
     margin-top: 8px;
+    justify-content: center;
 }
 
 .task-block-actions button {
     background: rgba(255, 255, 255, 0.6);
     border: none;
     border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
+    padding: 4px 8px;
+    font-size: 0.68rem;
     font-weight: 700;
     color: var(--color-text);
+    white-space: nowrap;
 }
 
 .task-block.priority-alta .task-block-actions button {

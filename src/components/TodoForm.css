@@ -67,3 +67,31 @@
     width: 100%;
     padding: 16px;
 }
+
+@media (min-width: 900px) {
+    .todo-form {
+        padding: 32px 40px;
+    }
+
+    .todo-form-main {
+        flex-direction: row;
+    }
+
+    .todo-form-main input[type="text"] {
+        flex: 1;
+    }
+
+    .todo-form-main textarea {
+        flex: 2;
+    }
+
+    .todo-form-row {
+        flex-wrap: nowrap;
+    }
+
+    .todo-form .btn-primary {
+        width: auto;
+        align-self: flex-end;
+        padding: 14px 40px;
+    }
+}
