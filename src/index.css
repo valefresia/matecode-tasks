@@ -25,12 +25,32 @@
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
   font-family: var(--font-body);
   color: var(--color-text);
-  min-height: 100vh;
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(rgba(188, 51, 95, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(188, 51, 95, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
 
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1,
@@ -51,9 +71,5 @@ input {
 }
 
 .grid-background {
-  background-color: var(--color-bg);
-  background-image:
-    linear-gradient(rgba(188, 51, 95, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(188, 51, 95, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-color: transparent;
 }
