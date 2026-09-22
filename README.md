@@ -1,75 +1,81 @@
-# React + TypeScript + Vite
+# Mi Agenda
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Task manager full-stack desarrollado como Proyecto Integrador del Módulo 4 de Henry Bootcamp, bajo la identidad de empresa ficticia **MateCode**.
 
-Currently, two official plugins are available:
+🔗 **Producción:** https://matecode-tasks-tau.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Descripción del proyecto
 
-## React Compiler
+Mi Agenda es una SPA de gestión de tareas con vista de planificador semanal. Permite crear, editar y eliminar tareas organizadas por día, con niveles de prioridad (baja / media / alta) codificados por color y fechas de vencimiento. Toda la información se sincroniza en tiempo real contra la base de datos, y el acceso está protegido por autenticación de usuario.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Funcionalidades principales:**
+- Registro e inicio de sesión (email/contraseña y Google)
+- CRUD completo de tareas con sincronización en tiempo real
+- Vista semanal por columnas de día
+- Prioridades visuales (baja/media/alta)
+- Fechas de vencimiento y frases motivacionales
 
-## Expanding the ESLint configuration
+## Stack tecnológico
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React + TypeScript (Vite)
+- **Backend / datos:** Firebase (Firestore + Authentication)
+- **Deploy:** Vercel
+- **Testing:** Vitest
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Decisiones arquitectónicas
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Firestore + `onSnapshot`**: se eligió sincronización en tiempo real en lugar de fetch manual, para que los cambios de tareas se reflejen al instante sin recargar ni pollear.
+- **Separación por capas**: `services/` (lógica de acceso a Firebase, ej. `authService.ts` y `taskService.ts`) desacoplada de `hooks/` (`useAuth.ts`, `useTasks.ts`) y de los componentes de UI, para que la lógica de negocio no dependa de React.
+- **Context API para auth**: `AuthContext` centraliza el estado de sesión y evita prop drilling entre rutas protegidas.
+- **`ProtectedRoute`**: guard de rutas a nivel de router, no de componente, para que el control de acceso sea consistente en toda la app.
+- **TypeScript**: tipado estático para reducir errores en tiempo de desarrollo, especialmente en los modelos de tarea y usuario.
+- **Vite**: elegido por tiempos de build y HMR más rápidos frente a alternativas como CRA.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+> _Completá o ajustá esta sección si tomaste alguna decisión adicional que quieras poder defender en la evaluación._
 
+## Instalación
+
+```bash
+git clone https://github.com/valefresia/matecode-tasks.git
+cd matecode-tasks
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Crear un archivo `.env` en la raíz basado en `.env.example` (ver sección siguiente) y luego:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Para correr los tests:
+
+```bash
+npm run test
+```
+
+## Variables de entorno
+
+Todas las variables usan el prefijo `VITE_` (requerido por Vite para exponerlas al cliente). Se obtienen desde la consola de Firebase del proyecto:
 
 ```
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
+
+> _Verificá que estos nombres coincidan exactamente con tu `.env.example` — ajustá si usaste otros._
+
+## Flujo de envío de emails
+
+**Estado: en definición con el equipo docente.**
+
+La app contempla notificaciones por email (ej. recordatorios de vencimiento de tareas) usando AWS SES. La integración está pendiente de confirmación sobre el proveedor a utilizar, ya que AWS SES requiere datos de facturación para salir de sandbox. En cuanto se defina, esta sección se actualiza con: proveedor final, trigger de envío (ej. Cloud Function al crear/actualizar tarea) y formato del email.
+
+## Uso de IA en el proceso de desarrollo
+
+Documentación detallada del proceso de trabajo con IA, casos donde fue más efectiva, y buenas prácticas identificadas:
+
+🔗 **[Completar con el link a la documentación de IA]**
