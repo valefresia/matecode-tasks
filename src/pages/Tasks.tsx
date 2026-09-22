@@ -55,7 +55,7 @@ export const Tasks = () => {
             <div className="tasks-header">
                 <div>
                     <span className="tasks-date">{todayLabel}</span>
-                    <h1>Mi agenda ✨</h1>
+                    <h1>Mi agenda </h1>
                     <p className="tasks-motivation">{getMotivationalPhrase()}</p>
                 </div>
                 <div className="tasks-header-right">
