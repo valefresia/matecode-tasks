@@ -1,7 +1,5 @@
 # Mi Agenda
 
-🔗 Producción: https://matecode-tasks-tau.vercel.app/
-
 🔗 **Producción:** https://matecode-tasks-tau.vercel.app/
 
 ## Descripción del proyecto
@@ -24,14 +22,12 @@ Mi Agenda es una SPA de gestión de tareas con vista de planificador semanal. Pe
 
 ## Decisiones arquitectónicas
 
-- **Firestore + `onSnapshot`**: se eligió sincronización en tiempo real en lugar de fetch manual, para que los cambios de tareas se reflejen al instante sin recargar ni pollear.
-- **Separación por capas**: `services/` (lógica de acceso a Firebase, ej. `authService.ts` y `taskService.ts`) desacoplada de `hooks/` (`useAuth.ts`, `useTasks.ts`) y de los componentes de UI, para que la lógica de negocio no dependa de React.
-- **Context API para auth**: `AuthContext` centraliza el estado de sesión y evita prop drilling entre rutas protegidas.
-- **`ProtectedRoute`**: guard de rutas a nivel de router, no de componente, para que el control de acceso sea consistente en toda la app.
-- **TypeScript**: tipado estático para reducir errores en tiempo de desarrollo, especialmente en los modelos de tarea y usuario.
-- **Vite**: elegido por tiempos de build y HMR más rápidos frente a alternativas como CRA.
-
-> _Completá o ajustá esta sección si tomaste alguna decisión adicional que quieras poder defender en la evaluación._
+- **Organización por capas**: `services/` (acceso a Firebase) separado de `hooks/` (estado de React) y de los componentes de UI, para poder testear cada capa por separado.
+- **Context API**: centraliza el usuario logueado y evita pasar props manualmente por toda la app.
+- **Firestore con `onSnapshot`**: sincronización en tiempo real, la UI se actualiza sola tras crear, editar o eliminar tareas.
+- **Reglas de seguridad en Firestore**: cada usuario solo puede leer/escribir sus propias tareas, validado del lado del servidor (no solo en el frontend).
+- **TypeScript**: tipado de los modelos de datos para reducir errores en desarrollo.
+- **Mobile-first**: estilos base para celular, con `@media queries` que amplían el layout en pantallas grandes.
 
 ## Instalación
 
@@ -69,9 +65,6 @@ VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
 ```
-
-> _Verificá que estos nombres coincidan exactamente con tu `.env.example` — ajustá si usaste otros._
-
 ## Flujo de envío de emails
 
 **Estado: en definición con el equipo docente.**
