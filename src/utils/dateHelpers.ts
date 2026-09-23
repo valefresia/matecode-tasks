@@ -17,6 +17,15 @@ export const toISODate = (date: Date): string => {
     return `${year}-${month}-${day}`;
 };
 
+export const getTodayISODate = (): string => {
+    return toISODate(new Date());
+};
+
+export const isPastDate = (dateStr: string): boolean => {
+    if (!dateStr) return false;
+    return dateStr < getTodayISODate();
+};
+
 export const getWeekDates = (weekOffset: number): Date[] => {
     const today = new Date();
     const currentDay = today.getDay();

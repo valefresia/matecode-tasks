@@ -63,6 +63,16 @@
     width: 100%;
 }
 
+.todo-form-date-label input[type="date"].input-error {
+    border-color: var(--color-danger);
+}
+
+.todo-form-error {
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
 .todo-form .btn-primary {
     width: 100%;
     padding: 16px;

@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { TodoForm } from "../src/components/TodoForm";
+import { toISODate } from "../src/utils/dateHelpers";
 
 describe("TodoForm", () => {
     it("renderiza los campos vacíos por defecto", () => {
@@ -58,4 +59,88 @@ describe("TodoForm", () => {
         expect(screen.getByPlaceholderText("Título de la tarea")).toHaveValue("Tarea existente");
         expect(screen.getByText("Guardar cambios")).toBeInTheDocument();
     });
-});
+
+    it("muestra un mensaje claro de error al seleccionar una fecha pasada y no llama a onSubmit", async () => {
+        const user = userEvent.setup();
+        const handleSubmit = vi.fn();
+
+        render(<TodoForm onSubmit={handleSubmit} />);
+
+        await user.type(screen.getByPlaceholderText("Título de la tarea"), "Tarea con fecha pasada");
+
+        const dateInput = screen.getByLabelText("Fecha límite");
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const pastDateStr = toISODate(yesterday);
+
+        fireEvent.change(dateInput, { target: { value: pastDateStr } });
+
+        expect(
+            screen.getByText("No podés seleccionar una fecha anterior al día de hoy.")
+        ).toBeInTheDocument();
+
+        await user.click(screen.getByText("Agregar tarea"));
+
+        expect(handleSubmit).not.toHaveBeenCalled();
+    });
+
+    it("permite enviar el formulario si la fecha es hoy o futura", async () => {
+        const user = userEvent.setup();
+        const handleSubmit = vi.fn();
+
+        render(<TodoForm onSubmit={handleSubmit} />);
+
+        await user.type(screen.getByPlaceholderText("Título de la tarea"), "Tarea para hoy");
+
+        const dateInput = screen.getByLabelText("Fecha límite");
+        const todayStr = toISODate(new Date());
+
+        fireEvent.change(dateInput, { target: { value: todayStr } });
+
+        expect(
+            screen.queryByText("No podés seleccionar una fecha anterior al día de hoy.")
+        ).not.toBeInTheDocument();
+
+        await user.click(screen.getByText("Agregar tarea"));
+
+        expect(handleSubmit).toHaveBeenCalledWith({
+            title: "Tarea para hoy",
+            description: "",
+            dueDate: todayStr,
+            priority: "media",
+        });
+    });
+
+    it("bloquea y muestra mensaje de error en modo edición si se selecciona una fecha pasada", async () => {
+        const user = userEvent.setup();
+        const handleSubmit = vi.fn();
+        const today = new Date();
+        const task = {
+            id: "1",
+            title: "Editar tarea",
+            description: "",
+            completed: false,
+            userId: "user1",
+            createdAt: Date.now(),
+            dueDate: toISODate(today),
+            priority: "media" as const,
+        };
+
+        render(<TodoForm onSubmit={handleSubmit} initialTask={task} />);
+
+        const dateInput = screen.getByLabelText("Fecha límite");
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const pastDateStr = toISODate(yesterday);
+
+        fireEvent.change(dateInput, { target: { value: pastDateStr } });
+
+        expect(
+            screen.getByText("No podés seleccionar una fecha anterior al día de hoy.")
+        ).toBeInTheDocument();
+
+        await user.click(screen.getByText("Guardar cambios"));
+
+        expect(handleSubmit).not.toHaveBeenCalled();
+    });
+});

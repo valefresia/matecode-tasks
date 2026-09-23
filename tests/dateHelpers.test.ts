@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { toISODate, getWeekDates, formatDayLabel, isToday } from "../src/utils/dateHelpers";
+import {
+    toISODate,
+    getWeekDates,
+    formatDayLabel,
+    isToday,
+    getTodayISODate,
+    isPastDate,
+} from "../src/utils/dateHelpers";
 
 describe("toISODate", () => {
     it("convierte una fecha a formato YYYY-MM-DD", () => {
@@ -50,3 +57,32 @@ describe("isToday", () => {
         expect(isToday(pastDate)).toBe(false);
     });
 });
+
+describe("getTodayISODate y isPastDate", () => {
+    it("getTodayISODate devuelve la fecha de hoy en formato YYYY-MM-DD", () => {
+        const today = new Date();
+        const expected = toISODate(today);
+        expect(getTodayISODate()).toBe(expected);
+    });
+
+    it("isPastDate devuelve true para una fecha anterior a hoy", () => {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        expect(isPastDate(toISODate(yesterday))).toBe(true);
+    });
+
+    it("isPastDate devuelve false para la fecha de hoy", () => {
+        const today = new Date();
+        expect(isPastDate(toISODate(today))).toBe(false);
+    });
+
+    it("isPastDate devuelve false para una fecha futura", () => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        expect(isPastDate(toISODate(tomorrow))).toBe(false);
+    });
+
+    it("isPastDate devuelve false para una cadena vacía", () => {
+        expect(isPastDate("")).toBe(false);
+    });
+});

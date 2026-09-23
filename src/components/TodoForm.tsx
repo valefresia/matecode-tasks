@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ChangeEvent } from "react";
 import type { NewTask, Task, Priority } from "../types/task";
+import { getTodayISODate, isPastDate } from "../utils/dateHelpers";
 import "./TodoForm.css";
 
 interface TodoFormProps {
@@ -12,11 +13,28 @@ export const TodoForm = ({ onSubmit, initialTask }: TodoFormProps) => {
     const [description, setDescription] = useState(initialTask?.description ?? "");
     const [dueDate, setDueDate] = useState(initialTask?.dueDate ?? "");
     const [priority, setPriority] = useState<Priority>(initialTask?.priority ?? "media");
+    const [dateError, setDateError] = useState<string | null>(null);
+
+    const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setDueDate(value);
+
+        if (value && isPastDate(value)) {
+            setDateError("No podés seleccionar una fecha anterior al día de hoy.");
+        } else {
+            setDateError(null);
+        }
+    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
 
         if (!title.trim()) return;
+
+        if (dueDate && isPastDate(dueDate)) {
+            setDateError("No podés seleccionar una fecha anterior al día de hoy.");
+            return;
+        }
 
         onSubmit({
             title: title.trim(),
@@ -30,6 +48,7 @@ export const TodoForm = ({ onSubmit, initialTask }: TodoFormProps) => {
             setDescription("");
             setDueDate("");
             setPriority("media");
+            setDateError(null);
         }
     };
 
@@ -56,9 +75,16 @@ export const TodoForm = ({ onSubmit, initialTask }: TodoFormProps) => {
                     <span>Fecha límite</span>
                     <input
                         type="date"
+                        className={dateError ? "input-error" : ""}
                         value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
+                        min={getTodayISODate()}
+                        onChange={handleDateChange}
                     />
+                    {dateError && (
+                        <span className="todo-form-error" role="alert">
+                            {dateError}
+                        </span>
+                    )}
                 </label>
 
                 <label className="todo-form-priority-label">
