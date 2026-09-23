@@ -82,4 +82,4 @@ La app contempla notificaciones por email (ej. recordatorios de vencimiento de t
 
 Documentación detallada del proceso de trabajo con IA, casos donde fue más efectiva, y buenas prácticas identificadas:
 
-🔗 **[Completar con el link a la documentación de IA]**
+🔗 (https://drive.google.com/drive/folders/1kZESx_qCTHDatftRnkMD8G75gbiRU40A)
