@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useTasks } from "../hooks/useTasks";
 import { TodoForm } from "../components/TodoForm";
 import { WeeklyPlanner } from "../components/WeeklyPlanner";
 import { getMotivationalPhrase } from "../utils/dateHelpers";
 import type { Task, NewTask } from "../types/task";
+import { EmailSummaryButton } from "../components/EmailSummaryButton";
 import "./Tasks.css";
 
 const todayLabel = new Date().toLocaleDateString("es-AR", {
@@ -19,19 +20,6 @@ export const Tasks = () => {
         useTasks();
     const [editingTask, setEditingTask] = useState<Task | null>(null);
     const [weekOffset, setWeekOffset] = useState(0);
-    const [summarySent, setSummarySent] = useState(false);
-
-    useEffect(() => {
-        if (!summarySent) return;
-        const timer = setTimeout(() => {
-            setSummarySent(false);
-        }, 4000);
-        return () => clearTimeout(timer);
-    }, [summarySent]);
-
-    const handleSendSummary = () => {
-        setSummarySent(true);
-    };
 
     const handleFormSubmit = async (newTask: NewTask) => {
         if (editingTask) {
@@ -61,13 +49,7 @@ export const Tasks = () => {
                 <div className="tasks-header-right">
                     <p className="tasks-user">{user?.email}</p>
                     <div className="tasks-header-actions">
-                        <button
-                            type="button"
-                            className={`btn-summary ${summarySent ? "sent" : ""}`}
-                            onClick={handleSendSummary}
-                        >
-                            {summarySent ? "Resumen enviado con éxito" : "Enviar mi resumen"}
-                        </button>
+                        <EmailSummaryButton todos={tasks} userEmail={user?.email ?? ""} />
                         <button className="btn-logout" onClick={logout}>Cerrar sesión</button>
                     </div>
                 </div>
